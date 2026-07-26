@@ -1,0 +1,96 @@
+extends Area2D
+
+signal hit
+
+@export var speed = 400 # How fast player is
+var screen_size # Size of game window
+@export var MatchContainer = Control
+@export var match = Sprite2D
+
+
+
+const BUBBLE_SCENE = preload("res://bubble.tscn")
+var timer := 0.1
+const SPAWN_INTERVAL = 0.15
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	screen_size = get_viewport_rect().size
+	# pass # Replace with function body.
+	#hide()
+	print(BUBBLE_SCENE)
+	MatchContainer.match_burn()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	# pass
+
+	var velocity = Vector2.ZERO
+	if Input.is_action_pressed("move_right"):
+		velocity.x += 1
+	if Input.is_action_pressed("move_left"):
+		velocity.x -= 1
+	if Input.is_action_pressed("move_up"):
+		velocity.y -= 1
+	if Input.is_action_pressed("move_down"):
+		velocity.y +=1
+	#timer -= delta	
+	if velocity.length() > 0:
+		velocity = velocity.normalized() * speed
+		$AnimatedSprite2D.animation = "up"
+		$AnimatedSprite2D.rotation = velocity.angle() + deg_to_rad(90)
+
+		$AnimatedSprite2D.play()
+		$AnimatedSprite2D.play()
+		timer -= delta
+		if timer <= 0.0:
+			timer = SPAWN_INTERVAL
+			spawn_bubble()
+	else:
+		$AnimatedSprite2D.stop()
+		
+	position += velocity * delta
+	position = position.clamp(Vector2.ZERO,screen_size)
+	
+	#if velocity.length() > 0:
+	
+	#timer -= delta
+	#if timer <= 0.0:
+		#timer = SPAWN_INTERVAL
+		#spawn_bubble()
+		
+		
+	
+	#
+	#if velocity.x != 0:
+		#$AnimatedSprite2D.animation = "walk"
+		##$AnimatedSprite2D.flip_v = false
+		#
+		## Note i docs, shorthand
+		##$AnimatedSprite2D.flip_h = velocity.x < 0
+	#elif velocity.y != 0:
+		#$AnimatedSprite2D.animation = "up"
+		#$AnimatedSprite2D.flip_v = velocity.y > 0
+		#
+
+
+
+func _on_body_entered(_body: Node2D) -> void:
+	#pass # Replace with function body.
+	hide()
+	hit.emit()
+	$CollisionShape2D.set_deferred("disabled", true)
+	
+	
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
+	$Camera2D.reset_smoothing()
+	
+func spawn_bubble():
+	var bubble = BUBBLE_SCENE.instantiate()
+	bubble.start_scale = $AnimatedSprite2D.scale * 0.7 # SCale the 32px sprite to good size
+	get_tree().current_scene.add_child(bubble)
+	bubble.global_position = global_position + Vector2(randf_range(-14,14), randf_range(-14,14))
+#	bubble.scale = Vector2(1,1)*0.5# * randf_range(0.14,0.26)

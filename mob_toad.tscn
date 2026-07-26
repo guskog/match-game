@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://jnnnlnwl8cf8"]
+
+[ext_resource type="Script" uid="uid://ba7a5vgye35jk" path="res://mob_toad.gd" id="1_6ktjg"]
+[ext_resource type="Texture2D" uid="uid://j3mjkl1668n1" path="res://art/Toad1.png" id="2_6ktjg"]
+[ext_resource type="Texture2D" uid="uid://c1ym61hnyus6v" path="res://art/2d_animation_frog_spritesheet.png" id="2_h8g05"]
+[ext_resource type="Texture2D" uid="uid://clcchny0ilddm" path="res://art/Toad2.png" id="3_h8g05"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h8g05"]
+atlas = ExtResource("2_h8g05")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2lus"]
+atlas = ExtResource("2_h8g05")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8d1e"]
+atlas = ExtResource("2_h8g05")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_710ks"]
+atlas = ExtResource("2_h8g05")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uv4qo"]
+atlas = ExtResource("2_h8g05")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bt2v4"]
+atlas = ExtResource("2_h8g05")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emob1"]
+atlas = ExtResource("2_h8g05")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m3t1t"]
+atlas = ExtResource("2_h8g05")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jfba5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h8g05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2lus")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8d1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_710ks")
+}],
+"loop": 1,
+"name": &"frog_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uv4qo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bt2v4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emob1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m3t1t")
+}],
+"loop": 1,
+"name": &"frog_jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6ktjg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_h8g05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6ktjg")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"toadMove",
+"speed": 1.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dy6sc"]
+radius = 35.0
+height = 88.0
+
+[node name="Mob_toad" type="CharacterBody2D" unique_id=1549356156]
+collision_mask = 0
+script = ExtResource("1_6ktjg")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=362163459]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_jfba5")
+animation = &"frog_jump"
+frame = 3
+frame_progress = 0.22260706
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=676177750]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_dy6sc")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=936462940 groups=["mobs"]]

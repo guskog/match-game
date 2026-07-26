@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://4nxvkfkvcsfa"]
+
+[ext_resource type="Texture2D" uid="uid://cp08d44achshb" path="res://art/playerGrey_up1.png" id="1_hqtel"]
+[ext_resource type="Script" uid="uid://l3kn8dxv6p8r" path="res://player.gd" id="1_sweqy"]
+[ext_resource type="Texture2D" uid="uid://b4bi01sywnrmq" path="res://art/playerGrey_up2.png" id="2_sweqy"]
+[ext_resource type="Texture2D" uid="uid://c5t1amrmgoymx" path="res://art/playerGrey_walk1.png" id="3_2hs0m"]
+[ext_resource type="Texture2D" uid="uid://4u6aaoibr0gl" path="res://art/playerGrey_walk2.png" id="4_1jxqw"]
+[ext_resource type="Script" uid="uid://c1p7pfm4k1dw3" path="res://trail.gd" id="6_2hs0m"]
+[ext_resource type="Script" uid="uid://ctnxsr6f10hdg" path="res://camera_2d.gd" id="7_1jxqw"]
+[ext_resource type="Texture2D" uid="uid://tqu7x6psyhgn" path="res://art/enemyFlyingAlt_2.png" id="7_b26j0"]
+[ext_resource type="Texture2D" uid="uid://dadtw3ur4sxbg" path="res://art/rock_front.png" id="8_n7ghd"]
+[ext_resource type="Script" uid="uid://kmlphosrr1tb" path="res://match_container.gd" id="10_ivps1"]
+[ext_resource type="Texture2D" uid="uid://13max7sup61n" path="res://art/MatchBurned.png" id="10_nvl01"]
+[ext_resource type="Texture2D" uid="uid://b3b7iwg330gms" path="res://art/MatchFresh.png" id="11_ivps1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lixot"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hqtel")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_sweqy")
+}],
+"loop": 1,
+"name": &"up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2hs0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1jxqw")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_2hs0m"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_1jxqw"]
+offsets = PackedFloat32Array(0, 0.512987, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dw050"]
+gradient = SubResource("Gradient_1jxqw")
+fill = 1
+fill_from = Vector2(0.47706422, 0.5091743)
+repeat = 1
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lixot"]
+radius = 27.0
+height = 68.0
+
+[node name="Player" type="Area2D" unique_id=1959987139 node_paths=PackedStringArray("MatchContainer", "match")]
+script = ExtResource("1_sweqy")
+MatchContainer = NodePath("AnimatedSprite2D/MatchContainer")
+match = NodePath("AnimatedSprite2D/Match")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1211023012]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_lixot")
+animation = &"walk"
+
+[node name="Trail" type="Line2D" parent="AnimatedSprite2D" unique_id=60548609]
+process_mode = 4
+top_level = true
+width = 46.645
+gradient = SubResource("Gradient_2hs0m")
+texture = SubResource("GradientTexture2D_dw050")
+texture_mode = 1
+joint_mode = 2
+script = ExtResource("6_2hs0m")
+
+[node name="Match" type="Sprite2D" parent="AnimatedSprite2D" unique_id=74217628]
+visible = false
+z_index = -1
+position = Vector2(22, 160)
+scale = Vector2(0.845, 2.205)
+texture = ExtResource("7_b26j0")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="AnimatedSprite2D" unique_id=768844580]
+visible = false
+offset_left = -16.0
+offset_right = 44.0
+offset_bottom = 90.0
+value = 100.0
+fill_mode = 2
+texture_progress = ExtResource("8_n7ghd")
+
+[node name="MatchContainer" type="Control" parent="AnimatedSprite2D" unique_id=730145462 node_paths=PackedStringArray("burnedMatch", "freshMatch")]
+z_index = -1
+layout_mode = 3
+anchors_preset = 0
+offset_left = 2.0
+offset_top = 192.0
+offset_right = 2.0
+offset_bottom = 192.0
+script = ExtResource("10_ivps1")
+burnedMatch = NodePath("ColorRect/BurnedMatch")
+freshMatch = NodePath("ColorRect2/FreshMatch")
+
+[node name="ColorRect" type="ColorRect" parent="AnimatedSprite2D/MatchContainer" unique_id=290598109]
+clip_children = 1
+layout_mode = 0
+offset_left = -50.0
+offset_top = -600.0
+offset_right = 50.0
+offset_bottom = -200.0
+
+[node name="BurnedMatch" type="Sprite2D" parent="AnimatedSprite2D/MatchContainer/ColorRect" unique_id=52691180]
+position = Vector2(50, 600)
+texture = ExtResource("10_nvl01")
+
+[node name="ColorRect2" type="ColorRect" parent="AnimatedSprite2D/MatchContainer" unique_id=2029855610]
+clip_children = 1
+layout_mode = 0
+offset_left = -50.0
+offset_top = -200.0
+offset_right = 50.0
+offset_bottom = 200.0
+
+[node name="FreshMatch" type="Sprite2D" parent="AnimatedSprite2D/MatchContainer/ColorRect2" unique_id=1126252913]
+position = Vector2(50, 200)
+texture = ExtResource("11_ivps1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1594116855]
+visible = false
+shape = SubResource("CapsuleShape2D_lixot")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1718592111]
+visible = false
+enabled = false
+zoom = Vector2(0.8, 0.8)
+limit_left = -60
+limit_top = -90
+limit_right = 540
+limit_bottom = 780
+position_smoothing_enabled = true
+position_smoothing_speed = 1.0
+editor_draw_limits = true
+script = ExtResource("7_1jxqw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bx6nssdcsqfr1"]
+
+[ext_resource type="Script" uid="uid://cygqcde04o2a2" path="res://bubbles.gd" id="1_n2mqj"]
+[ext_resource type="Texture2D" uid="uid://d5xddyca4m7s" path="res://art/smoke.png" id="1_y2db8"]
+
+[node name="Bubbles" type="Sprite2D" unique_id=647578254]
+top_level = true
+z_index = -1
+texture = ExtResource("1_y2db8")
+script = ExtResource("1_n2mqj")
+start_scale = Vector2(0.1, 0.1)
