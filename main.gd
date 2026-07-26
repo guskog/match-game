@@ -4,6 +4,7 @@ extends Node
 @export var mob_toad_scene: PackedScene
 @export var player_scene: PackedScene
 @onready var matchbox_position: Marker2D = $MatchboxPosition
+@onready var platform_polygon: PackedVector2Array = _get_platform_polygon()
 
 var score = 1
 var highScore = 0
@@ -77,7 +78,8 @@ func _on_mob_timer_timeout() -> void:
 	mob_spawn_location.progress_ratio = randf()
 	
 	# Set the mob's position to the random location.
-	mob.position = mob_spawn_location.position
+	#mob.position = mob_spawn_location.position
+	var landing_position = mob_spawn_location.position
 	
 	
 	# Set the mob's direction perpendicular to the path direction.
@@ -89,12 +91,17 @@ func _on_mob_timer_timeout() -> void:
 	mob.rotation = direction 
 	
 # Choose the velocity for the mob.
-	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
-	mob.linear_velocity = velocity.rotated(direction)
+	var velocity = Vector2(randf_range(150.0, 250.0), 0.0).rotated(direction)
+	mob.linear_velocity = velocity #.rotated(direction)
 	
 		
 	# Spawn the mob by adding it to the Main scene.
 	add_child(mob)
+	
+	var fall_distance := 400.0
+	var start_position = landing_position - velocity.normalized() * fall_distance
+	#var landing_position = mob.position
+	mob.spawn_falling(start_position, landing_position, velocity)
 
 func _on_toad_timer_timeout() -> void:
 	print("Toad timer")
@@ -115,4 +122,20 @@ func _on_start_timer_timeout() -> void:
 	$MobTimer.start()
 	#$ToadTimer.start()
 	$ScoreTimer.start()
+
+func _get_platform_polygon() -> PackedVector2Array:
+	var curve: Curve2D = $MobPath.curve
+	var baked_points = curve.get_baked_points()
+	
+	var world_points = PackedVector2Array()
+	for point in baked_points:
+		world_points.append($MobPath.to_global(point))
+	
+	return world_points
+	
+func is_inside_platform(world_pos: Vector2)-> bool:
+	var local_pos = $MobPath.to_local(world_pos)
+	var curve: Curve2D = $MobPath.curve
+	
+	return Geometry2D.is_point_in_polygon(local_pos, curve.get_baked_points())	
 	
