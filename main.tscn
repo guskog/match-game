@@ -5,11 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://jnnnlnwl8cf8" path="res://mob_toad.tscn" id="3_7mycd"]
 [ext_resource type="PackedScene" uid="uid://4nxvkfkvcsfa" path="res://player.tscn" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://c6813nnk5lacu" path="res://hud.tscn" id="4_1bvp3"]
-[ext_resource type="AudioStream" uid="uid://cv4yh2t234p62" path="res://art/gameover.wav" id="5_lquwl"]
+[ext_resource type="Texture2D" uid="uid://pdqx7xkb0ko2" path="res://art/chair_bg.png" id="5_272bh"]
+[ext_resource type="AudioStream" uid="uid://b5denplkco0hu" path="res://audio/extinguish.wav" id="7_5vw27"]
+[ext_resource type="Texture2D" uid="uid://dj1iq1fgka2ql" path="res://art/matchbox.png" id="8_5vw27"]
 
 [sub_resource type="Curve2D" id="Curve2D_7mycd"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -32, -24, 0, 0, 0, 0, 504, -24, 0, 0, 0, 0, 504, 744, 0, 0, 0, 0, -24, 736, 0, 0, 0, 0, -24, -8)
+"points": PackedVector2Array(0, 0, 0, 0, 114.064026, 51.536842, 0, 0, 0, 0, 1031.6233, 71.747375, 0, 0, 0, 0, 1141.6497, 728.58954, 0, 0, 0, 0, 53.49906, 755.8738, 0, 0, 0, 0, 90.84746, 48.505264)
 }
 point_count = 5
 
@@ -35,7 +37,12 @@ mob_scene = ExtResource("2_1bvp3")
 mob_toad_scene = ExtResource("3_7mycd")
 player_scene = ExtResource("3_lquwl")
 
-[node name="Player" parent="." unique_id=1959987139 instance=ExtResource("3_lquwl")]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1116279664]
+z_index = -2
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+texture = ExtResource("5_272bh")
 
 [node name="MobTimer" type="Timer" parent="." unique_id=808815308]
 wait_time = 0.5
@@ -54,12 +61,13 @@ one_shot = true
 position = Vector2(640, 426)
 
 [node name="MobPath" type="Path2D" parent="." unique_id=1712018476]
-position = Vector2(4.7014923, 7.75)
+position = Vector2(69, 33.000004)
 scale = Vector2(0.99067163, 0.9895833)
 curve = SubResource("Curve2D_7mycd")
 
 [node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath" unique_id=797717715]
-position = Vector2(-32, -24)
+position = Vector2(114.064026, 51.536842)
+rotation = 0.022022845
 
 [node name="HUD" parent="." unique_id=1558174392 instance=ExtResource("4_1bvp3")]
 
@@ -68,9 +76,16 @@ stream = SubResource("AudioStreamOggVorbis_7mycd")
 parameters/looping = true
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="." unique_id=110783636]
-stream = ExtResource("5_lquwl")
+stream = ExtResource("7_5vw27")
 
-[connection signal="hit" from="Player" to="." method="game_over"]
+[node name="MatchboxPosition" type="Marker2D" parent="." unique_id=1478328592]
+position = Vector2(210, 821)
+
+[node name="Sprite2D" type="Sprite2D" parent="MatchboxPosition" unique_id=1630516441]
+position = Vector2(-78, -1.9999999)
+scale = Vector2(5, 5)
+texture = ExtResource("8_5vw27")
+
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
 [connection signal="timeout" from="ToadTimer" to="." method="_on_toad_timer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]

@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bbm32la75p8n3" path="res://art/enemyFlyingAlt_1.png" id="1_b3mxk"]
 [ext_resource type="Texture2D" uid="uid://tqu7x6psyhgn" path="res://art/enemyFlyingAlt_2.png" id="2_1qmh0"]
 [ext_resource type="Texture2D" uid="uid://ckm7mokl8admq" path="res://art/enemySwimming_1.png" id="3_gfurk"]
+[ext_resource type="Texture2D" uid="uid://civrgqjyd6q55" path="res://art/ice.png" id="4_gfurk"]
 [ext_resource type="Texture2D" uid="uid://d1nref1a1v3e8" path="res://art/enemySwimming_2.png" id="4_ieysi"]
 [ext_resource type="Texture2D" uid="uid://21up5du41v0u" path="res://art/enemyWalking_1.png" id="5_cixyi"]
 [ext_resource type="Texture2D" uid="uid://dkpnphfn7nv7k" path="res://art/enemyWalking_2.png" id="6_7ulmv"]
@@ -20,6 +21,14 @@ animations = [{
 "loop": 1,
 "name": &"fly",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_gfurk")
+}],
+"loop": 1,
+"name": &"ice",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -44,9 +53,8 @@ animations = [{
 "speed": 3.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dy6sc"]
-radius = 37.0
-height = 100.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5vw27"]
+size = Vector2(63, 72.5)
 
 [node name="Mob" type="RigidBody2D" unique_id=1192365359]
 collision_mask = 0
@@ -55,14 +63,16 @@ script = ExtResource("1_1qmh0")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=362163459]
-scale = Vector2(0.75, 0.75)
+position = Vector2(-5, -3)
+rotation = 1.5707964
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_jfba5")
-animation = &"walk"
-frame_progress = 0.030677775
+animation = &"ice"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=676177750]
+position = Vector2(0, -1)
 rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_dy6sc")
+shape = SubResource("RectangleShape2D_5vw27")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=936462940 groups=["mobs"]]
 

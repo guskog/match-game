@@ -1,11 +1,12 @@
 extends Control
 
 signal burned_out
+signal about_to_burn_out
 
 @export var burnedMatch = Sprite2D
 @export var freshMatch = Sprite2D
 @export var burn_duration := 6.0
-
+@export var throw_lead_time := 0.2
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -26,6 +27,11 @@ func match_burn():
 	#tween.set_parallel()
 	tween.parallel().tween_property(burnedMatch, "position",Vector2(0,-400),burn_duration).as_relative()
 	#tween.tween_property(burnedMatch, "position",Vector2(0,-150),5).as_relative()
+	
+	var lead_tween = create_tween()
+	lead_tween.tween_interval(burn_duration - throw_lead_time)
+	lead_tween.tween_callback(func(): about_to_burn_out.emit())
+	
 	tween.tween_callback(func(): burned_out.emit())
 	#print("Match Burning")
 	#print(freshMatch.position)
