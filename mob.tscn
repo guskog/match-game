@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d1nref1a1v3e8" path="res://art/enemySwimming_2.png" id="4_ieysi"]
 [ext_resource type="Texture2D" uid="uid://21up5du41v0u" path="res://art/enemyWalking_1.png" id="5_cixyi"]
 [ext_resource type="Texture2D" uid="uid://dkpnphfn7nv7k" path="res://art/enemyWalking_2.png" id="6_7ulmv"]
+[ext_resource type="Script" uid="uid://c1p7pfm4k1dw3" path="res://trail.gd" id="9_ieysi"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jfba5"]
 animations = [{
@@ -53,6 +54,19 @@ animations = [{
 "speed": 3.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_cixyi"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_1jxqw"]
+offsets = PackedFloat32Array(0, 0.512987, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7ulmv"]
+gradient = SubResource("Gradient_1jxqw")
+fill = 1
+fill_from = Vector2(0.47706422, 0.5091743)
+repeat = 1
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5vw27"]
 size = Vector2(63, 72.5)
 
@@ -68,6 +82,16 @@ rotation = 1.5707964
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_jfba5")
 animation = &"ice"
+
+[node name="Trail" type="Line2D" parent="AnimatedSprite2D" unique_id=1943792715]
+process_mode = 4
+top_level = true
+width = 46.645
+gradient = SubResource("Gradient_cixyi")
+texture = SubResource("GradientTexture2D_7ulmv")
+texture_mode = 1
+joint_mode = 2
+script = ExtResource("9_ieysi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=676177750]
 position = Vector2(0, -1)
