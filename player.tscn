@@ -105,7 +105,7 @@ value = 100.0
 fill_mode = 2
 texture_progress = ExtResource("8_n7ghd")
 
-[node name="MatchContainer" type="Control" parent="Node2D" unique_id=730145462 node_paths=PackedStringArray("burnedMatch", "freshMatch")]
+[node name="MatchContainer" type="Control" parent="Node2D" unique_id=730145462 node_paths=PackedStringArray("burnedMatch", "freshMatch", "fire_sprite")]
 z_index = -1
 layout_mode = 3
 anchors_preset = 0
@@ -113,6 +113,7 @@ scale = Vector2(0.5, 0.5)
 script = ExtResource("10_ivps1")
 burnedMatch = NodePath("ColorRect/BurnedMatch")
 freshMatch = NodePath("ColorRect2/FreshMatch")
+fire_sprite = NodePath("../AnimatedSprite2D")
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="Node2D/MatchContainer" unique_id=290598109]

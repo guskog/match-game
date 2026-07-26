@@ -85,18 +85,11 @@ func _on_match_about_to_burn_out() -> void:
 func _on_match_burned_out() -> void:
 	is_active = false
 	$CollisionShape2D.set_deferred("disabled", true)
-	# Call function to extinguish flame
 	#$AnimatedSprite2D.hide()
 	add_to_group("burned_matches")
 	
-	# Flytta match container utanför eld
-	match_container.reparent(self, true)
-	
-	# Släck elden
-	var tween = create_tween()
-	tween.set_parallel()
-	tween.tween_property($Node2D/AnimatedSprite2D, "modulate:a", 0, 2)
-	tween.tween_property($Node2D/AnimatedSprite2D, "scale", Vector2(0.3,0.3), 1)
+	# Call function to extinguish flame
+	match_container.match_extinguish(self)
 	
 	burned_out.emit()
 
@@ -106,6 +99,7 @@ func _on_body_entered(_body: Node2D) -> void:
 	is_active = false
 	hit.emit()
 	$CollisionShape2D.set_deferred("disabled", true)
+	match_container.match_extinguish(self)
 	
 	
 func start(pos):
