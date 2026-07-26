@@ -55,9 +55,9 @@ repeat = 1
 radius = 27.0
 height = 68.0
 
-[node name="Player" type="Area2D" unique_id=1959987139 node_paths=PackedStringArray("MatchContainer", "match")]
+[node name="Player" type="Area2D" unique_id=1959987139 node_paths=PackedStringArray("match_container", "match")]
 script = ExtResource("1_sweqy")
-MatchContainer = NodePath("AnimatedSprite2D/MatchContainer")
+match_container = NodePath("AnimatedSprite2D/MatchContainer")
 match = NodePath("AnimatedSprite2D/Match")
 metadata/_edit_group_ = true
 

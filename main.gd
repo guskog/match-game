@@ -2,8 +2,11 @@ extends Node
 
 @export var mob_scene: PackedScene
 @export var mob_toad_scene: PackedScene
+@export var player_scene: PackedScene
+
 var score = 1
 var highScore = 0
+var current_player: Area2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,12 +31,26 @@ func game_over() -> void:
 func new_game():
 	get_tree().call_group("mobs", "queue_free")
 	score = 0
-	$Player.start($StartPosition.position)
+	#$Player.start($StartPosition.position)
+	spawn_player($StartPosition.position)
 	$StartTimer.start()
 	$HUD.updateScore(score)
 	$HUD.show_message("Get Ready")
 	$Music.play()
 	
+
+func spawn_player(pos: Vector2) ->void:
+	var new_player = player_scene.instantiate()
+	add_child(new_player)
+	new_player.start(pos)
+	new_player.burned_out.connect(_on_player_burned_out)
+	new_player.hit.connect(game_over)
+	current_player = new_player
+	
+func _on_player_burned_out() -> void:
+	print("Burned out reached")
+	var spawn_pos = current_player.position
+	spawn_player(spawn_pos)
 
 func _on_mob_timer_timeout() -> void:
 	#pass # Replace with function body.

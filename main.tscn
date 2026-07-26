@@ -33,6 +33,7 @@ tags = {
 script = ExtResource("1_h2yge")
 mob_scene = ExtResource("2_1bvp3")
 mob_toad_scene = ExtResource("3_7mycd")
+player_scene = ExtResource("3_lquwl")
 
 [node name="Player" parent="." unique_id=1959987139 instance=ExtResource("3_lquwl")]
 
@@ -50,6 +51,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="StartPosition" type="Marker2D" parent="." unique_id=1014771352]
+position = Vector2(640, 426)
 
 [node name="MobPath" type="Path2D" parent="." unique_id=1712018476]
 position = Vector2(4.7014923, 7.75)

@@ -1,10 +1,11 @@
 extends Area2D
 
 signal hit
+signal burned_out
 
 @export var speed = 400 # How fast player is
 var screen_size # Size of game window
-@export var MatchContainer = Control
+@export var match_container: Control
 @export var match = Sprite2D
 
 
@@ -12,6 +13,7 @@ var screen_size # Size of game window
 const BUBBLE_SCENE = preload("res://bubble.tscn")
 var timer := 0.1
 const SPAWN_INTERVAL = 0.15
+var is_active := true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,11 +21,14 @@ func _ready() -> void:
 	# pass # Replace with function body.
 	#hide()
 	print(BUBBLE_SCENE)
-	MatchContainer.match_burn()
+	match_container.match_burn()
+	match_container.burned_out.connect(_on_match_burned_out)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# pass
+	if not is_active:
+		return
 
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
@@ -73,7 +78,10 @@ func _process(delta: float) -> void:
 		#$AnimatedSprite2D.flip_v = velocity.y > 0
 		#
 
-
+func _on_match_burned_out() -> void:
+	is_active = false
+	$CollisionShape2D.set_deferred("disabled", true)
+	burned_out.emit()
 
 func _on_body_entered(_body: Node2D) -> void:
 	#pass # Replace with function body.
@@ -84,6 +92,7 @@ func _on_body_entered(_body: Node2D) -> void:
 	
 func start(pos):
 	position = pos
+	is_active = true
 	show()
 	$CollisionShape2D.disabled = false
 	$Camera2D.reset_smoothing()
