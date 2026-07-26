@@ -55,9 +55,10 @@ func _process(delta: float) -> void:
 			spawn_bubble()
 	#else:
 	#	$AnimatedSprite2D.stop()
-		
-	position += velocity * delta
-	position = position.clamp(Vector2.ZERO,screen_size)
+	
+	_move_within_platform(velocity * delta)	
+	#position += velocity * delta
+	#position = position.clamp(Vector2.ZERO,screen_size)
 	
 	#if velocity.length() > 0:
 	
@@ -148,6 +149,16 @@ func _update_throw_position(t: float, from: Vector2, to: Vector2, arc_height: fl
 	pos.y -= sin(t*PI) * arc_height
 	position = pos
 		
+	
+func _move_within_platform(offset: Vector2) -> void:
+	var new_pos_x = Vector2(position.x + offset.x, position.y)
+	if get_parent().is_inside_platform(new_pos_x):
+		position.x = new_pos_x.x
+		
+	
+	var new_pos_y = Vector2(position.x, position.y + offset.y)
+	if get_parent().is_inside_platform(new_pos_y):
+		position.y = new_pos_y.y
 	
 	
 	
