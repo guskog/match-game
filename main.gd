@@ -52,6 +52,7 @@ func spawn_player(pos: Vector2) ->void:
 		return
 	var new_player = player_scene.instantiate()
 	add_child(new_player)
+	score += 1
 	new_player.throw_from(matchbox_position.position, pos)
 	new_player.about_to_burn_out.connect(_on_player_about_to_burn_out)
 	#new_player.start(pos)
@@ -102,7 +103,7 @@ func _on_toad_timer_timeout() -> void:
 	
 func _on_score_timer_timeout() -> void:
 #	pass # Replace with function body.
-	score += 1
+	#score += 1
 	$HUD.updateScore(score)
 	if score > highScore:
 		highScore = score
