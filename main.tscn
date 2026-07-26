@@ -5,13 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://jnnnlnwl8cf8" path="res://mob_toad.tscn" id="3_7mycd"]
 [ext_resource type="PackedScene" uid="uid://4nxvkfkvcsfa" path="res://player.tscn" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://c6813nnk5lacu" path="res://hud.tscn" id="4_1bvp3"]
-[ext_resource type="Texture2D" uid="uid://pdqx7xkb0ko2" path="res://art/chair_bg.png" id="5_272bh"]
+[ext_resource type="Texture2D" uid="uid://ca2g1kkab0wwu" path="res://art/chair_bg4.png" id="5_5vw27"]
 [ext_resource type="AudioStream" uid="uid://b5denplkco0hu" path="res://audio/extinguish.wav" id="7_5vw27"]
-[ext_resource type="Texture2D" uid="uid://dj1iq1fgka2ql" path="res://art/matchbox.png" id="8_5vw27"]
+[ext_resource type="Texture2D" uid="uid://c8i5y5nqcodfm" path="res://art/matchbox_l.png" id="8_5vw27"]
 
 [sub_resource type="Curve2D" id="Curve2D_7mycd"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 169, 90, 0, 0, 0, 0, 1070, 104, 0, 0, 0, 0, 1213, 811, 0, 0, 0, 0, 141, 824, 0, 0, 0, 0, 164, 108)
+"points": PackedVector2Array(0, 0, 0, 0, 167, 75, 0, 0, 0, 0, 1076, 82, 0, 0, 0, 0, 1207, 677, 0, 0, 0, 0, 78, 673, 0, 0, 0, 0, 158, 80)
 }
 point_count = 5
 
@@ -37,12 +37,18 @@ mob_scene = ExtResource("2_1bvp3")
 mob_toad_scene = ExtResource("3_7mycd")
 player_scene = ExtResource("3_lquwl")
 
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2126569606]
+z_index = -2
+offset_right = 1280.0
+offset_bottom = 960.0
+color = Color(0.123873375, 0.0052964343, 0.027201368, 1)
+
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1116279664]
 z_index = -2
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(4, 4)
-texture = ExtResource("5_272bh")
+texture = ExtResource("5_5vw27")
 
 [node name="MobTimer" type="Timer" parent="." unique_id=808815308]
 wait_time = 0.5
@@ -64,8 +70,8 @@ position = Vector2(640, 426)
 curve = SubResource("Curve2D_7mycd")
 
 [node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath" unique_id=797717715]
-position = Vector2(169, 90)
-rotation = 0.01553704
+position = Vector2(167, 75)
+rotation = 0.007700618
 
 [node name="HUD" parent="." unique_id=1558174392 instance=ExtResource("4_1bvp3")]
 
@@ -80,8 +86,8 @@ stream = ExtResource("7_5vw27")
 position = Vector2(210, 821)
 
 [node name="Sprite2D" type="Sprite2D" parent="MatchboxPosition" unique_id=1630516441]
-position = Vector2(-78, -1.9999999)
-scale = Vector2(5, 5)
+position = Vector2(-83, 31)
+scale = Vector2(1.93, 1.93)
 texture = ExtResource("8_5vw27")
 
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
